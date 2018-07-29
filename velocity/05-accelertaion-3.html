@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=800 height=800></canvas>
+<script src="../utils.js"></script>
+<script src="../Ball.js"></script>
+<script>
+  var canvas = document.getElementById('canvas'),
+      context = canvas.getContext('2d'),
+//      mouse = utils.captureMouse(canvas),
+      ball = new Ball(50, 'red'),
+      vx = 0,
+      vy = 0,
+      ax = 0,
+      ay = 0;
+  
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+  
+  window.addEventListener('keydown', function (e) {
+    switch (e.keyCode) {
+      case 37:
+        ax = -0.1;
+        break;
+      case 39:
+        ax = 0.1;
+        break;
+      case 38:
+        ay = -0.1;
+        break;
+      case 40:
+        ay = 0.1;
+        break;
+    }
+  }, false);
+  window.addEventListener('keyup', function (e) {
+    ax = 0;
+    ay = 0;
+  });
+  
+  (function drawFrame() {
+    requestAnimationFrame(drawFrame, canvas);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    vx += ax;
+    vy += ay;
+    ball.x += vx;
+    ball.y += vy;
+    ball.draw(context);
+  })();
+</script>
+</body>
+</html>

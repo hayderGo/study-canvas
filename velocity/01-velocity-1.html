@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=1200 height=800></canvas>
+<script src="../utils.js"></script>
+<script src="../Ball.js"></script>
+<script>
+  var canvas = document.getElementById('canvas'),
+      context = canvas.getContext('2d'),
+      ball = new Ball(50, 'red'),
+      vx = 1,
+      vy = 2;
+  
+  ball.x = 50;
+  ball.y = 100;
+  (function drawFrame() {
+    requestAnimationFrame(drawFrame, canvas);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ball.x += vx;
+    ball.y += vy;
+    ball.draw(context);
+  })();
+</script>
+</body>
+</html>

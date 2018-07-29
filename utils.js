@@ -35,3 +35,18 @@ utils.captureMouse = function (element) {
   
   return mouse;
 };
+
+utils.color2RGB = function (color, alpha) {
+  if (typeof color === 'string' && color[0] === '#') {
+    color = parseInt(color.slice(1), 16);
+  }
+  alpha = typeof alpha === undefined ? 1 : isNaN(Number(alpha)) ? 1 : Number(alpha);
+  var r = color >> 16 & 0xff,
+      g = color >> 8 & 0xff,
+      b = color & 0xff;
+  var a = alpha > 1 ? 1 : alpha < 0 ? 0 : alpha;
+  if (a = 1) {
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  }
+  return 'rgb(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+};

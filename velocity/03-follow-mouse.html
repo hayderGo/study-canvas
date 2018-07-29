@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=800 height=800></canvas>
+<script src="../utils.js"></script>
+<script src="../Arrow.js"></script>
+<script>
+  var canvas = document.getElementById('canvas'),
+      context = canvas.getContext('2d'),
+      mouse = utils.captureMouse(canvas),
+      arrow = new Arrow(50, 'red'),
+      speed = 3;
+  
+  arrow.x = 50;
+  arrow.y = 100;
+  (function drawFrame() {
+    requestAnimationFrame(drawFrame, canvas);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    var dx = mouse.x - arrow.x,
+        dy = mouse.y - arrow.y,
+        radians = Math.atan2(dy, dx),
+        vx = Math.cos(radians),
+        vy = Math.sin(radians);
+    
+    arrow.rotation = radians;
+    arrow.x += vx;
+    arrow.y += vy;
+    arrow.draw(context);
+  })();
+</script>
+</body>
+</html>
