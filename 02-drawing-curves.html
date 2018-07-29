@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         margin: 0 auto;
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=1000 height=800></canvas>
+<script src="./utils.js"></script>
+<script>
+  window.onload = function () {
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        mouse = utils.captureMouse(canvas),
+        x0 = 100,
+        y0 = 200,
+        x2 = 300,
+        y2 = 200;
+    canvas.addEventListener('mousemove', function () {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      
+      context.beginPath();
+      context.moveTo(x0, y0);
+      context.quadraticCurveTo(mouse.x, mouse.y, x2, y2);
+      context.stroke();
+    })
+  };
+</script>
+</body>
+</html>

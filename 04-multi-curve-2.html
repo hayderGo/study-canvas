@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         margin: 0 auto;
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=1000 height=800></canvas>
+<script src="./utils.js"></script>
+<script>
+  window.onload = function () {
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        mouse = utils.captureMouse(canvas),
+        points = [
+          {
+            x: 100,
+            y: 100
+          },
+          {
+            x: 300,
+            y: 50
+          },
+          {
+            x: 200,
+            y: 300
+          },
+          {
+            x: 410,
+            y: 140
+          },
+          {
+            x: 640,
+            y: 500
+          },
+          {
+            x: 200,
+            y: 400
+          },
+          {
+            x: 600,
+            y: 700
+          },
+          {
+            x: 300,
+            y: 600
+          },
+          {
+            x: 600,
+            y: 600
+          }
+        ],
+//        numPoints = 9,
+        ctrlPoint = {},
+        ctrlPoints = [];
+
+//    for (var i = 0; i < numPoints; i++) {
+//      points[i] = {
+//        x: Math.random() * canvas.width * 0.8,
+//        y: Math.random() * canvas.height * 0.8
+//      };
+//    }
+    
+    context.save();
+    context.beginPath();
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.font = '16px sans-serif';
+    for (var i = 0; i < points.length; i++) {
+      context.moveTo(points[i].x, points[i].y - 10);
+      context.arc(points[i].x, points[i].y, 10, utils.deg2Rad(-90), utils.deg2Rad(270));
+      context.strokeText(i, points[i].x, points[i].y);
+    }
+    context.restore();
+    context.moveTo(points[0].x, points[0].y);
+    
+    for (var i = 1; i < points.length - 2; i ++) {
+      ctrlPoint.x = (points[i].x + points[i + 1].x) / 2;
+      ctrlPoint.y = (points[i].y + points[i + 1].y) / 2;
+      
+      ctrlPoints.push({
+        x: ctrlPoint.x,
+        y: ctrlPoint.y
+      });
+      
+      context.quadraticCurveTo(points[i].x, points[i].y, ctrlPoint.x, ctrlPoint.y);
+    }
+    context.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, points[points.length - 1].x, points[points.length - 1].x);
+    
+    context.save();
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.font = '16px sans-serif';
+    context.fillStyle = 'red';
+    for (var i = 0; i < ctrlPoints.length; i++) {
+      context.moveTo(ctrlPoints[i].x, ctrlPoints[i].y - 10);
+      context.arc(ctrlPoints[i].x, ctrlPoints[i].y, 10, utils.deg2Rad(-90), utils.deg2Rad(270));
+      context.fillText('c' + (i), ctrlPoints[i].x, ctrlPoints[i].y);
+    }
+    context.restore();
+    
+    context.stroke();
+  };
+</script>
+</body>
+</html>
