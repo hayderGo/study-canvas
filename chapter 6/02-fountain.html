@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      #canvas {
+         border: 1px solid #000;
+      }
+   </style>
+</head>
+<body>
+<canvas id="canvas" width=400 height=400></canvas>
+<script src="../utils.js"></script>
+<script src="../Ball.js"></script>
+<script>
+  window.onload = function () {
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        balls = [],
+        numBalls = 80,
+        gravity = 0.5;
+    
+    for (var i = 0; i < numBalls; i++) {
+      var ball = new Ball(2, utils.parseColor(Math.random() * 0xFFFFFF));
+      ball.id = 'ball-' + i;
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height;
+      ball.vx = Math.random() * 4 - 2;
+      ball.vy = Math.random() * -10 - 10;
+      balls.push(ball);
+    }
+    
+    function draw(ball) {
+      ball.vy += gravity;
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      if (ball.x - ball.radius > canvas.width ||
+          ball.x + ball.radius < 0 ||
+          ball.y - ball.radius > canvas.height ||
+          ball.y + ball.radius < 0) {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height;
+        ball.vx = Math.random() * 4 - 2;
+        ball.vy = Math.random() * -10 - 10;
+      }
+      ball.draw(context);
+    }
+    
+    (function drawFrame() {
+      requestAnimationFrame(drawFrame, canvas);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      
+      balls.forEach(draw);
+    }());
+  };
+</script>
+</body>
+</html>

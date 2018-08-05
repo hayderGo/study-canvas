@@ -7,6 +7,8 @@ function Ball(radius, color) {
   }
   this.x = 0;
   this.y = 0;
+  this.vx = 0;
+  this.vy = 0;
   this.radius = radius;
   this.color = color;
   this.scaleX = 1;
